@@ -19,49 +19,48 @@ const typedValueElement = document.getElementById('typed-value');
 
 document.getElementById('start').addEventListener('click', () => {
     const quoteIndex = Math.floor(Math.random() * quotes.length);
-    const qoute = quotes[quoteIndex];
+    const quote = quotes[quoteIndex];
 
-    words = qoute.split(' ');
+    words = quote.split(' ');
     wordIndex = 0;
 
-    const spanWords = words.map(function(word){ return `<span>${word} </span>`});
-    
+    const spanWords = words.map(function(word) {
+        return `<span>${word} </span>`;
+    });
+
     quoteElement.innerHTML = spanWords.join('');
 
     quoteElement.childNodes.className = 'highlight';
 
     messageElement.innerText = '';
 
-
     typedValueElement.value = '';
 
     typedValueElement.focus();
 
     startTime = new Date().getTime();
-});    
+});
 
 typedValueElement.addEventListener('input', () => {
-
     const currentWord = words[wordIndex];
-
     const typedValue = typedValueElement.value;
 
     if (typedValue === currentWord && wordIndex === words.length - 1) {
-        const elapsedTime = new Date().getTime() - startTime;
-        const message = `CONGRATULATIONS! You finished in $(elapsedTime / 1000) seconds.`;
+        const elapsedTime = (new Date().getTime() - startTime) / 1000; // Corrected syntax
+        const message = `CONGRATULATIONS! You finished in ${elapsedTime} seconds.`;
         messageElement.innerText = message;
     } else if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
         typedValueElement.value = '';
         wordIndex++;
-        
-        for(const wordElement of quoteElement.childNodes) {
+
+        for (const wordElement of quoteElement.childNodes) {
             wordElement.className = '';
         }
 
         quoteElement.childNodes[wordIndex].className = 'highlight';
-    } else if(currentWord.startsWith(typedValue)){
+    } else if (currentWord.startsWith(typedValue)) {
         typedValueElement.className = '';
-    } else{
+    } else {
         typedValueElement.className = 'error';
     }
 });
