@@ -17,12 +17,15 @@ const quoteElement = document.getElementById('quote');
 const messageElement = document.getElementById('message');
 const typedValueElement = document.getElementById('typed-value');
 
+let totalWordsTyped = 0; // Add a variable to track the total words typed
+
 document.getElementById('start').addEventListener('click', () => {
     const quoteIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[quoteIndex];
 
     words = quote.split(' ');
     wordIndex = 0;
+    totalWordsTyped = 0; // Reset totalWordsTyped when starting a new game
 
     const spanWords = words.map(function(word) {
         return `<span>${word} </span>`;
@@ -46,12 +49,14 @@ typedValueElement.addEventListener('input', () => {
     const typedValue = typedValueElement.value;
 
     if (typedValue === currentWord && wordIndex === words.length - 1) {
-        const elapsedTime = (new Date().getTime() - startTime) / 1000; // Corrected syntax
-        const message = `CONGRATULATIONS! You finished in ${elapsedTime} seconds.`;
+        const elapsedTime = (new Date().getTime() - startTime) / 1000;
+        const speed = calculateSpeed(totalWordsTyped, elapsedTime);
+        const message = `CONGRATULATIONS! You finished in ${elapsedTime.toFixed(2)} seconds. Your speed: ${speed.toFixed(2)} WPM.`;
         messageElement.innerText = message;
     } else if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
         typedValueElement.value = '';
         wordIndex++;
+        totalWordsTyped++; // Increment totalWordsTyped
 
         for (const wordElement of quoteElement.childNodes) {
             wordElement.className = '';
@@ -64,3 +69,8 @@ typedValueElement.addEventListener('input', () => {
         typedValueElement.className = 'error';
     }
 });
+
+function calculateSpeed(totalWords, elapsedTime) {
+    const wordsPerMinute = (totalWords / elapsedTime) * 60;
+    return wordsPerMinute;
+}
