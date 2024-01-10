@@ -1,17 +1,24 @@
-<html>
-    <head>
-        <title>Typing Game</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header>
         <h1>Typing Game!</h1>
-        <p>Practice your typing skills with a quote from Sherlock Holmes. Click ***Start*** to begin!</p>
+        <p>Practice your typing skills with a quote from Sherlock Holmes. Click <span id="start-btn">Start</span> to begin!</p>
+    </header>
+    <main>
         <p id="quote"></p>
         <p id="message"></p>
-        <div>
-            <input type="text" aria-label="current-word" id="typed-value" >
+        <div class="input-container">
+            <input type="text" aria-label="current-word" id="typed-value" placeholder="Type the words here">
             <button type="button" id="start">Start</button>
         </div>
-        <script src="script.js"></script>
-    </body>
+    </main>
+    <script src="script.js"></script>
+</body>
 </html>
