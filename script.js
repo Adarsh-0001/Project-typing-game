@@ -8,13 +8,9 @@ const quotes = [
     'Education never ends, Watson. It is a series of lessons, with the greatest for the last.',
     'The only way to do great work is to love what you do.',
     'Success is not final, failure is not fatal: It is the courage to continue that counts.',
-    'Don’t watch the clock; do what it does. Keep going.',
-    'Believe you can and you’re halfway there.',
-    'Your time is limited, don’t waste it living someone else’s life.',
     'The future belongs to those who believe in the beauty of their dreams.',
     'It does not matter how slowly you go as long as you do not stop.',
     'The only limit to our realization of tomorrow will be our doubts of today.',
-    'Life is what happens when you’re busy making other plans.',
     'You have within you right now, everything you need to deal with whatever the world can throw at you.'
 ];
 
