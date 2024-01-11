@@ -59,16 +59,19 @@ document.getElementById('start').addEventListener('click', () => {
     startTime = new Date().getTime();
 });
 
+// ...
+
 typedValueElement.addEventListener('input', () => {
     const currentWord = words[wordIndex];
     const typedValue = typedValueElement.value;
 
-    if (typedValue === currentWord && wordIndex === words.length - 1) {
+    // Update the condition to compare without considering special characters
+    if (normalizeString(typedValue) === normalizeString(currentWord) && wordIndex === words.length - 1) {
         const elapsedTime = (new Date().getTime() - startTime) / 1000;
         const speed = calculateSpeed(totalWordsTyped, elapsedTime);
         const message = `CONGRATULATIONS! You finished in ${elapsedTime.toFixed(2)} seconds. Your speed: ${speed.toFixed(2)} WPM. Total mistakes: ${totalMistakes}`;
         messageElement.innerText = message;
-    } else if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
+    } else if (typedValue.endsWith(' ') && normalizeString(typedValue.trim()) === normalizeString(currentWord)) {
         typedValueElement.value = '';
         wordIndex++;
         totalWordsTyped++;
@@ -78,13 +81,18 @@ typedValueElement.addEventListener('input', () => {
         }
 
         quoteElement.childNodes[wordIndex].className = 'highlight';
-    } else if (currentWord.startsWith(typedValue)) {
+    } else if (normalizeString(currentWord).startsWith(normalizeString(typedValue))) {
         typedValueElement.className = '';
     } else {
         typedValueElement.className = 'error';
         mistakes++;
     }
 });
+
+// Function to normalize strings by removing special characters and converting to lowercase
+function normalizeString(str) {
+    return str.replace(/[^\w\s]/gi, '').toLowerCase();
+}
 
 function calculateSpeed(totalWords, elapsedTime) {
     const wordsPerMinute = (totalWords / elapsedTime) * 60;
