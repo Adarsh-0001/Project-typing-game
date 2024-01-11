@@ -64,7 +64,10 @@ typedValueElement.addEventListener('input', () => {
     const typedValue = typedValueElement.value;
 
     if (typedValue === currentWord && wordIndex === words.length - 1) {
-        // ... (unchanged)
+        const elapsedTime = (new Date().getTime() - startTime) / 1000;
+        const speed = calculateSpeed(totalWordsTyped, elapsedTime);
+        const message = `CONGRATULATIONS! You finished in ${elapsedTime.toFixed(2)} seconds. Your speed: ${speed.toFixed(2)} WPM. Total mistakes: ${totalMistakes}`;
+        messageElement.innerText = message;
     } else if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
         typedValueElement.value = '';
         wordIndex++;
@@ -75,7 +78,7 @@ typedValueElement.addEventListener('input', () => {
         }
 
         quoteElement.childNodes[wordIndex].className = 'highlight';
-    } else if (currentWord.startsWith(typedValue) || currentWord.indexOf(typedValue) === 0) {
+    } else if (currentWord.startsWith(typedValue)) {
         typedValueElement.className = '';
     } else {
         typedValueElement.className = 'error';
